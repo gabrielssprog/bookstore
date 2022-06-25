@@ -15,6 +15,9 @@ describe('Update book controller', () => {
     }
   }
   const response: any = {
+    status: jest.fn(() => {
+      return response
+    }),
     json: jest.fn((buffer: string) => {
       return buffer
     })
@@ -41,5 +44,20 @@ describe('Update book controller', () => {
         ...request.body
       }
     })
+  })
+
+  it('should throw error', async () => {
+    const id = `${Math.random()}`
+    request.params.bookId = id
+    const updateBookController = new UpdateBookController({
+      ...updateBookService,
+      execute: async () => {
+        throw new Error()
+      }
+    })
+
+    await updateBookController.handle(request, response)
+
+    expect(response.status).toHaveBeenCalledWith(400)
   })
 })

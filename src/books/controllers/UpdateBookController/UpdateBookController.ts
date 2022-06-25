@@ -7,10 +7,14 @@ export class UpdateBookController {
   ) { }
 
   public async handle(request: Request, response: Response) {
-    const book = await this.updateBookService.execute(request.body, {
-      id: request.params.bookId
-    })
+    try {
+      const book = await this.updateBookService.execute(request.body, {
+        id: request.params.bookId
+      })
 
-    response.json({ book })
+      response.json({ book })
+    } catch(error) {
+      response.status(400).json()
+    }
   }
 }

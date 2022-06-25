@@ -13,6 +13,9 @@ describe('Create book controller', () => {
   }
 
   const response: any = {
+    status: jest.fn(() => {
+      return response
+    }),
     json: jest.fn((buffer: string) => {
       return buffer
     })
@@ -38,5 +41,18 @@ describe('Create book controller', () => {
         id
       }
     })
+  })
+
+  it('should throw error', async () => {
+    const createBookController = new CreateBookController({
+      ...createBookService,
+      execute: async () => {
+        throw new Error()
+      }
+    })
+
+    await createBookController.handle(request, response)
+
+    expect(response.status).toHaveBeenCalledWith(400)
   })
 })

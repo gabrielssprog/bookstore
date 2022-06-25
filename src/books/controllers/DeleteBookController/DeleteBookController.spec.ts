@@ -9,6 +9,9 @@ describe('Delete book controller', () => {
     },
   }
   const response: any = {
+    status: jest.fn(() => {
+      return response
+    }),
     json: jest.fn((buffer: string) => {
       return buffer
     })
@@ -41,5 +44,26 @@ describe('Delete book controller', () => {
         id: request.params.bookId
       }
     })
+  })
+
+  it('should throw error', async () => {
+    const bookToDelete = {
+      id: `${Math.random()}`,
+      title: 'Hello World',
+      author: 'Hello',
+      price: 50.00,
+      amount: 49,
+    }
+    request.params.bookId = bookToDelete.id
+    const deleteBookController = new DeleteBookController({
+      ...updateBookService,
+      execute: async () => {
+        throw new Error()
+      }
+    })
+
+    await deleteBookController.handle(request, response)
+
+    expect(response.status).toHaveBeenCalledWith(400)
   })
 })

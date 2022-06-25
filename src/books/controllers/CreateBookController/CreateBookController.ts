@@ -7,8 +7,12 @@ export class CreateBookController {
   ) { }
 
   public async handle(request: Request, response: Response) {
-    const book = await this.createBookService.execute(request.body)
+    try {
+      const book = await this.createBookService.execute(request.body)
 
-    response.json({ book })
+      response.json({ book })
+    } catch(error) {
+      response.status(400).json();
+    }
   }
 }

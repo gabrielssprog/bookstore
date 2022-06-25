@@ -6,6 +6,9 @@ describe('List books controller', () => {
   const request: any = {}
 
   const response: any = {
+    status: jest.fn(() => {
+      return response
+    }),
     json: jest.fn((buffer: string) => {
       return buffer
     })
@@ -31,5 +34,18 @@ describe('List books controller', () => {
     expect(response.json).toHaveBeenCalledWith({
       books: [book]
     })
+  })
+
+  it('should throw error', async () => {
+    const listBooksController = new ListBooksController({
+      ...listBooksService,
+      execute: async () => {
+        throw new Error()
+      }
+    })
+
+    await listBooksController.handle(request, response)
+
+    expect(response.status).toHaveBeenCalledWith(400)
   })
 })

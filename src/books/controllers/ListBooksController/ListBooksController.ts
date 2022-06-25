@@ -7,8 +7,12 @@ export class ListBooksController {
   ) { }
 
   public async handle(request: Request, response: Response) {
-    const books = await this.listBooksService.execute()
+    try {
+      const books = await this.listBooksService.execute()
 
-    response.json({ books })
+      response.json({ books })
+    } catch(error) {
+      response.status(400).json()
+    }
   }
 }
