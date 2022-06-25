@@ -4,7 +4,7 @@
 Projeto CRUD simples que simula o estoque de uma biblioteca, sendo possível cadastrar novos livros, listar todos os livros, atualizar um livro e remover um livro do estoque.
 
 ## 🤔 Porquê?
-Fiz este projeto com o intuito de praticar e demonstrar minhas habilidades com as tecnologias sitadas na sessão de [tecnologias](#🧰-tecnologias-usadas)
+Fiz este projeto com o intuito de praticar e demonstrar minhas habilidades com as tecnologias sitadas na sessão de [tecnologias](#-tecnologias-usadas)
 
 ## 🧰 Tecnologias usadas
 - Nodejs
