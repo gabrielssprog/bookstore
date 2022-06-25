@@ -7,6 +7,7 @@ export class App {
     const app = express()
     const routes = Routes.newRoutes(connection)
 
+    app.use(express.json())
     app.use(routes)
 
     return app

@@ -1,4 +1,3 @@
-import { BookWithoutId } from "../../book"
 import { BookRepository } from "../../repository/BookRepository"
 import { CreateBookService } from "./CreateBookService"
 
@@ -8,7 +7,7 @@ describe('Create book service', () => {
   it('should return created book', async () => {
     const createBookService = new CreateBookService({
       ...bookRepository,
-      create: async (data: BookWithoutId) => {
+      create: async (data) => {
         return {
           ...data,
           id: `${Math.random()}`
