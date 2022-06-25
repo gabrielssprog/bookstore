@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  database:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - "database:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_DB: "bookstore"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "bookstore"
+    networks:
+      - "bookstore"
+
+  application:
+    build: .
+    ports:
+      - "3333:3333"
+    volumes:
+      - ".:/app"
+    environment:
+      DATABASE_URL: "postgresql://root:bookstore@database:5432/bookstore?schema=public"
+      PORT: 3333
+    command: "npm run dev"
+    depends_on:
+      - "database"
+    networks:
+      - "bookstore"
+
+networks:
+  bookstore:
+
+volumes:
+  database:
