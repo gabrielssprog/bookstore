@@ -10,7 +10,7 @@ export class CreateBookController {
     try {
       const book = await this.createBookService.execute(request.body)
 
-      response.json({ book })
+      response.status(201).json({ book })
     } catch(error) {
       response.status(400).json();
     }

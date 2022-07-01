@@ -16,12 +16,12 @@ services:
   application:
     build: .
     ports:
-      - "3333:3333"
+      - "3001:3001"
     volumes:
       - ".:/app"
     environment:
       DATABASE_URL: "postgresql://root:bookstore@database:5432/bookstore?schema=public"
-      PORT: 3333
+      PORT: 3001
     command: "npm run dev"
     depends_on:
       - "database"

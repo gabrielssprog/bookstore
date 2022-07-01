@@ -34,47 +34,5 @@ docker-compose up -d
 docker-compose exec application npx prisma migrate deploy
 ```
 
-## 🧭 Como usar
-### Cadastrar livro
-#### Configuração
-|Url|Método|
-|-|-|
-|http://localhost:3333/books|POST|
-
-#### Corpo
-```json
-{
-  "title": "string",
-  "author": "string",
-  "price": "number",
-  "amount": "number"
-}
-```
-
-### Listar livros
-#### Configuração
-|Url|Método|
-|-|-|
-|http://localhost:3333/books|GET|
-
-### Atualizar livro
-#### Configuração
-|Url|Método|
-|-|-|
-|http://localhost:3333/books/:bookId|PUT|
-
-#### Corpo
-```json
-{
-  "title": "string",    // [opcional]
-  "author": "string",   // [opcional]
-  "price": "number",    // [opcional]
-  "amount": "number"    // [opcional]
-}
-```
-
-### Deletar livro
-#### Configuração
-|Url|Método|
-|-|-|
-|http://localhost:3333/books/:bookId|PUT|
+### 4. Acessando a documentação
+Agora entro com o seu navegador no link `http://localhost:3001/docs` para acessar a documentação e o playground e testar o projeto.

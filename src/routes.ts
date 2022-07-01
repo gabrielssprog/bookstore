@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client"
-import express from "express"
 import { CreateBookController } from "./books/controllers/CreateBookController/CreateBookController"
 import { DeleteBookController } from "./books/controllers/DeleteBookController/DeleteBookController"
 import { ListBooksController } from "./books/controllers/ListBooksController/ListBooksController"
@@ -9,6 +8,10 @@ import { CreateBookService } from "./books/services/createBookService/CreateBook
 import { DeleteBookService } from "./books/services/deleteBookService/DeleteBookService"
 import { ListBooksService } from "./books/services/listBooksServices/ListBooksService"
 import { UpdateBookService } from "./books/services/updateBookService/UpdateBookService"
+import express from "express"
+import swaggerUi from "swagger-ui-express"
+import yamljs from "yamljs"
+import { join } from "path"
 
 export class Routes {
   public static newRoutes(connection: PrismaClient) {
@@ -30,6 +33,11 @@ export class Routes {
     routes.get('/books', listBooksController.handle.bind(listBooksController))
     routes.put('/books/:bookId', updateBookController.handle.bind(updateBookController))
     routes.delete('/books/:bookId', deleteBookController.handle.bind(deleteBookController))
+
+    const swaggerDocument = yamljs.load(join(__dirname, '..', 'swagger.yml'))
+
+    routes.use('/docs', swaggerUi.serve)
+    routes.get('/docs', swaggerUi.setup(swaggerDocument))
 
     return routes
   }

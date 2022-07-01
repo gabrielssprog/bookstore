@@ -1,0 +1,108 @@
+openapi: "3.0.0"
+info:
+  title: "Book Store"
+  description: "Projeto CRUD API simples que simula o estoque de uma biblioteca, sendo possível cadastrar novos livros, listar todos os livros, atualizar um livro e remover um livro do estoque."
+  version: 0.1.9
+components:
+  schemas:
+    BookBody:
+      properties:
+        title:
+          type: "string"
+        author:
+          type: "string"
+        price:
+          type: "number"
+        amount:
+          type: "integer"
+    BookResponse:
+      properties:
+        id:
+          type: "string"
+        title:
+          type: "string"
+        author:
+          type: "string"
+        price:
+          type: "number"
+        amount:
+          type: "integer"
+paths:
+  /books:
+    get:
+      summary: "Retorna uma lista de todos os livros."
+      responses:
+        200:
+          description: "Um array JSON de livros"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  books:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/BookResponse"
+    post:
+      summary: "Registra um novo livro"
+      requestBody:
+        description: "Um objeto JSON de livro"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookBody"
+      responses:
+        201:
+          description: "Um objeto JSON de livro"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  book:
+                    $ref: "#/components/schemas/BookResponse"
+  /books/{bookId}:
+    put:
+      summary: "Atualiza um livro."
+      parameters:
+        - in: "path"
+          name: "bookId"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        description: "Um objeto JSON de livro"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookBody"
+      responses:
+        200:
+          description: "Um objeto JSON de livro"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  book:
+                    $ref: "#/components/schemas/BookResponse"
+    delete:
+      summary: "Deleta um livro"
+      parameters:
+        - in: "path"
+          name: "bookId"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Um objeto JSON de livro"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  book:
+                    $ref: "#/components/schemas/BookResponse"
