@@ -2,7 +2,7 @@ openapi: "3.0.0"
 info:
   title: "Book Store"
   description: "Projeto CRUD API simples que simula o estoque de uma biblioteca, sendo possível cadastrar novos livros, listar todos os livros, atualizar um livro e remover um livro do estoque."
-  version: 0.1.9
+  version: 1.0.0
 components:
   schemas:
     BookBody:
