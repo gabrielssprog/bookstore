@@ -1,4 +1,4 @@
-# Book Store
+# [Book Store](https://gb-bookstore.herokuapp.com/docs)
 
 ## 🔎 Sobre
 Projeto CRUD API simples que simula o estoque de uma biblioteca, sendo possível cadastrar novos livros, listar todos os livros, atualizar um livro e remover um livro do estoque.
