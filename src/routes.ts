@@ -8,10 +8,11 @@ import { CreateBookService } from "./books/services/createBookService/CreateBook
 import { DeleteBookService } from "./books/services/deleteBookService/DeleteBookService"
 import { ListBooksService } from "./books/services/listBooksServices/ListBooksService"
 import { UpdateBookService } from "./books/services/updateBookService/UpdateBookService"
+import { join } from "path"
 import express from "express"
 import swaggerUi from "swagger-ui-express"
 import yamljs from "yamljs"
-import { join } from "path"
+import { HandleHttpErrorMiddleware } from "./errors/HandleHttpErrorMiddleware/HandleHttpErrorMiddleware"
 
 export class Routes {
   public static newRoutes(connection: PrismaClient) {
@@ -38,6 +39,10 @@ export class Routes {
 
     routes.use('/docs', swaggerUi.serve)
     routes.get('/docs', swaggerUi.setup(swaggerDocument))
+
+    const handleHttpErrorMiddleware = new HandleHttpErrorMiddleware()
+
+    routes.use(handleHttpErrorMiddleware.handle)
 
     return routes
   }

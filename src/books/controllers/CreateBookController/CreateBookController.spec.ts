@@ -11,7 +11,6 @@ describe('Create book controller', () => {
       amount: 49
     }
   }
-
   const response: any = {
     status: jest.fn(() => {
       return response
@@ -20,6 +19,7 @@ describe('Create book controller', () => {
       return buffer
     })
   }
+  const next: any = jest.fn((error: Error) => {})
 
   it('should return created book', async () => {
     const id = `${Math.random()}`
@@ -33,7 +33,7 @@ describe('Create book controller', () => {
       }
     })
 
-    await createBookController.handle(request, response)
+    await createBookController.handle(request, response, next)
 
     expect(response.json).toHaveBeenCalledWith({
       book: {
@@ -43,7 +43,7 @@ describe('Create book controller', () => {
     })
   })
 
-  it('should throw error', async () => {
+  it('should call "next" with error', async () => {
     const createBookController = new CreateBookController({
       ...createBookService,
       execute: async () => {
@@ -51,8 +51,8 @@ describe('Create book controller', () => {
       }
     })
 
-    await createBookController.handle(request, response)
+    await createBookController.handle(request, response, next)
 
-    expect(response.status).toHaveBeenCalledWith(400)
+    expect(next).toHaveBeenCalledWith(new Error())
   })
 })

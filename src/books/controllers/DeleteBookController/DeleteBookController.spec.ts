@@ -16,6 +16,7 @@ describe('Delete book controller', () => {
       return buffer
     })
   }
+  const next: any = jest.fn((error: Error) => {})
 
   it('should return deleted book', async () => {
     const bookToDelete = {
@@ -36,7 +37,7 @@ describe('Delete book controller', () => {
       }
     })
 
-    await deleteBookController.handle(request, response)
+    await deleteBookController.handle(request, response, next)
 
     expect(response.json).toHaveBeenCalledWith({
       book: {
@@ -62,8 +63,8 @@ describe('Delete book controller', () => {
       }
     })
 
-    await deleteBookController.handle(request, response)
+    await deleteBookController.handle(request, response, next)
 
-    expect(response.status).toHaveBeenCalledWith(400)
+    expect(next).toHaveBeenCalledWith(new Error())
   })
 })

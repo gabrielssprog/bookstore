@@ -4,7 +4,6 @@ import { ListBooksController } from "./ListBooksController"
 describe('List books controller', () => {
   const listBooksService = Object.create(ListBooksService.prototype)
   const request: any = {}
-
   const response: any = {
     status: jest.fn(() => {
       return response
@@ -13,6 +12,7 @@ describe('List books controller', () => {
       return buffer
     })
   }
+  const next: any = jest.fn((error: Error) => {})
 
   it('should return books', async () => {
     const book = {
@@ -29,7 +29,7 @@ describe('List books controller', () => {
       }
     })
 
-    await listBooksController.handle(request, response)
+    await listBooksController.handle(request, response, next)
 
     expect(response.json).toHaveBeenCalledWith({
       books: [book]
@@ -41,11 +41,11 @@ describe('List books controller', () => {
       ...listBooksService,
       execute: async () => {
         throw new Error()
-      }
+     }
     })
 
-    await listBooksController.handle(request, response)
+    await listBooksController.handle(request, response, next)
 
-    expect(response.status).toHaveBeenCalledWith(400)
+    expect(next).toHaveBeenCalledWith(new Error())
   })
 })

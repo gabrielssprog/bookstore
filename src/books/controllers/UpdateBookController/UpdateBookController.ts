@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import { UpdateBookService } from "../../services/updateBookService/UpdateBookService"
 
 export class UpdateBookController {
@@ -6,15 +6,15 @@ export class UpdateBookController {
     private updateBookService: UpdateBookService
   ) { }
 
-  public async handle(request: Request, response: Response) {
+  public async handle(request: Request, response: Response, next: NextFunction) {
     try {
       const book = await this.updateBookService.execute(request.body, {
         id: request.params.bookId
       })
 
-      response.json({ book })
+      return response.json({ book })
     } catch(error) {
-      response.status(400).json()
+      return next(error)
     }
   }
 }

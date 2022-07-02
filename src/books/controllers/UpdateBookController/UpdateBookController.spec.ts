@@ -22,6 +22,7 @@ describe('Update book controller', () => {
       return buffer
     })
   }
+  const next: any = jest.fn((error: Error) => {})
 
   it('should return updated book', async () => {
     const id = `${Math.random()}`
@@ -36,7 +37,7 @@ describe('Update book controller', () => {
       }
     })
 
-    await updateBookController.handle(request, response)
+    await updateBookController.handle(request, response, next)
 
     expect(response.json).toHaveBeenCalledWith({
       book: {
@@ -56,8 +57,8 @@ describe('Update book controller', () => {
       }
     })
 
-    await updateBookController.handle(request, response)
+    await updateBookController.handle(request, response, next)
 
-    expect(response.status).toHaveBeenCalledWith(400)
+    expect(next).toHaveBeenCalledWith(new Error())
   })
 })
